@@ -63,6 +63,35 @@ $superheroes = [
   ], 
 ];
 
+// Check if there's a query parameter in the URL
+$query = isset($_GET['query']) ? trim($_GET['query']) : '';
+
+// If the query is empty, display the full list of superhero aliases
+if ($query === '') {
+    echo "<ul>";
+    foreach ($superheroes as $superhero) {
+        echo "<li>" . htmlspecialchars($superhero['alias']) . "</li>";
+    }
+    echo "</ul>";
+} else {
+    // Search for a superhero that matches the alias or name
+    $found = false;
+    foreach ($superheroes as $superhero) {
+        if (strcasecmp($superhero['alias'], $query) === 0 || strcasecmp($superhero['name'], $query) === 0) {
+            echo "<h3>" . htmlspecialchars($superhero['alias']) . "</h3>";
+            echo "<h4>" . htmlspecialchars($superhero['name']) . "</h4>";
+            echo "<p>" . htmlspecialchars($superhero['biography']) . "</p>";
+            $found = true;
+            break;
+        }
+    }
+
+    // If no superhero is found, display a not found message
+    if (!$found) {
+        echo "<p>Superhero not found</p>";
+    }
+}
+
 ?>
 
 <ul>
