@@ -1,7 +1,9 @@
 document.getElementById("searchButton").addEventListener("click", function() {
     const inputElement = document.getElementById("superheroInput");
     const query = inputElement.value.trim(); // Sanitize input by trimming whitespace
-    const url = `superheroes.php?query=${encodeURIComponent(query)}`; // Encode to avoid injection
+
+    // Define the URL based on whether there is a search query
+    const url = query ? `superheroes.php?query=${encodeURIComponent(query)}` : "superheroes.php";
 
     fetch(url)
         .then(response => {
